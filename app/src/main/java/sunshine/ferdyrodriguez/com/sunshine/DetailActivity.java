@@ -54,7 +54,7 @@ public class DetailActivity extends Activity {
 
         private static final String TAG = DetailFragment.class.getSimpleName();
 
-        private static final String FORECAST_SHARE_HASHTAG = "#SunshineApp";
+        private static final String FORECAST_SHARE_HASHTAG = " #SunshineApp";
         private String mForecastStr;
 
         public DetailFragment() {
