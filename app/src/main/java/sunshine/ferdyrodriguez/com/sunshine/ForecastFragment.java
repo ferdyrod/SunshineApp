@@ -22,7 +22,7 @@ import java.util.Date;
 
 import sunshine.ferdyrodriguez.com.sunshine.data.WeatherContract;
 import sunshine.ferdyrodriguez.com.sunshine.data.WeatherContract.WeatherEntry;
-import sunshine.ferdyrodriguez.com.sunshine.ForecastAdapter;
+
 
 
 /**
@@ -45,7 +45,8 @@ public class ForecastFragment extends Fragment implements LoaderCallbacks<Cursor
             WeatherContract.WeatherEntry.COLUMN_SHORT_DESC,
             WeatherContract.WeatherEntry.COLUMN_MAX_TEMP,
             WeatherContract.WeatherEntry.COLUMN_MIN_TEMP,
-            WeatherContract.LocationEntry.COLUMN_LOC_SETTING
+            WeatherContract.LocationEntry.COLUMN_LOC_SETTING,
+            WeatherContract.WeatherEntry.COLUMN_WEATHER_ID
     };
 
     public static final int COL_WEATHER_ID = 0;
@@ -54,6 +55,7 @@ public class ForecastFragment extends Fragment implements LoaderCallbacks<Cursor
     public static final int COL_WEATHER_MAX_TEMP = 3;
     public static final int COL_WEATHER_MIN_TEMP = 4;
     public static final int COL_LOC_SETTING = 5;
+    public static final int COL_WEATHER_CONDITION_ID = 6;
 
     private ForecastAdapter mForecastAdapter;
 
@@ -102,7 +104,7 @@ public class ForecastFragment extends Fragment implements LoaderCallbacks<Cursor
 
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-                Cursor cursor =mForecastAdapter.getCursor();
+                Cursor cursor = mForecastAdapter.getCursor();
                 if (cursor != null && cursor.moveToPosition(position)) {
                     Intent intent = new Intent(getActivity(), DetailActivity.class)
                             .putExtra(DetailActivity.DATE_KEY, cursor.getString(COL_WEATHER_DATE));

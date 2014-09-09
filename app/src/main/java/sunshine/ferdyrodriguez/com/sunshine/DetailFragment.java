@@ -158,7 +158,8 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
         Log.v(TAG, "In onLoadFinished");
         if (data != null && data.moveToFirst()) {
 
-            mIconView.setImageResource(R.drawable.ic_launcher);
+            int weatherId = data.getInt(data.getColumnIndex(WeatherContract.WeatherEntry.COLUMN_WEATHER_ID));
+            mIconView.setImageResource(Utility.getArtResourceForWeatherCondition(weatherId));
 
             String date = data.getString(data.getColumnIndex(WeatherContract.WeatherEntry.COLUMN_DATETEXT));
             String friendlyDateText = Utility.getDayName(getActivity(), date);

@@ -3,17 +3,21 @@ package sunshine.ferdyrodriguez.com.sunshine;
 import android.app.Fragment;
 import android.content.Context;
 import android.database.Cursor;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CursorAdapter;
 import android.widget.ImageView;
+import android.widget.Switch;
 import android.widget.TextView;
 
 /**
  * Created by ferdy.rodriguez on 05/09/2014.
  */
 public class ForecastAdapter extends CursorAdapter {
+
+    private static final String TAG = ForecastAdapter.class.getSimpleName();
 
     private static final int VIEW_TYPE_TODAY = 0;
     private static final int VIEW_TYPE_FUTURE_DAY = 1;
@@ -57,8 +61,17 @@ public class ForecastAdapter extends CursorAdapter {
 
         ViewHolder viewHolder = (ViewHolder) view.getTag();
 
-        int weatherID = cursor.getInt(ForecastFragment.COL_WEATHER_ID);
-        viewHolder.iconview.setImageResource(R.drawable.ic_launcher);
+        int weatherID = cursor.getInt(ForecastFragment.COL_WEATHER_CONDITION_ID);
+        Log.v(TAG, "Weather ID code: " + weatherID);
+        int viewType = getItemViewType(cursor.getPosition());
+        switch (viewType) {
+            case VIEW_TYPE_TODAY:
+                viewHolder.iconView.setImageResource(Utility.getArtResourceForWeatherCondition(weatherID));
+                break;
+            case VIEW_TYPE_FUTURE_DAY:
+                viewHolder.iconView.setImageResource(Utility.getIconResourceForWeatherCondition(weatherID));
+                break;
+        }
 
         String dateString = cursor.getString(ForecastFragment.COL_WEATHER_DATE);
         viewHolder.dateView.setText(Utility.getFriendlyDayString(context, dateString));
@@ -77,14 +90,14 @@ public class ForecastAdapter extends CursorAdapter {
 
 
     public static class ViewHolder {
-        public final ImageView iconview;
+        public final ImageView iconView;
         public final TextView dateView;
         public final TextView descriptionView;
         public final TextView highView;
         public final TextView lowView;
 
         public ViewHolder(View view) {
-            iconview = (ImageView) view.findViewById(R.id.list_item_icon);
+            iconView = (ImageView) view.findViewById(R.id.list_item_icon);
             dateView = (TextView) view.findViewById(R.id.list_item_date_textview);
             descriptionView = (TextView) view.findViewById(R.id.list_item_forecast_textview);
             highView = (TextView) view.findViewById(R.id.list_item_high_textview);
